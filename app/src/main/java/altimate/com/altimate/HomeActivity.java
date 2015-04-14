@@ -1,17 +1,33 @@
 package altimate.com.altimate;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 
 public class HomeActivity extends ActionBarActivity {
+
+  private Button mButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home);
+    mButton = (Button) findViewById(R.id.launch_button);
+    mButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        //launch altimeter activity here
+        Intent myIntent = new Intent(HomeActivity.this, AltimeterActivity.class);
+        HomeActivity.this.startActivity(myIntent);
+
+     }
+    });
   }
 
 
