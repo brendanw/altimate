@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 
 
@@ -56,4 +58,5 @@ public class HomeActivity extends ActionBarActivity {
     return true;
 
   }
+
 }
