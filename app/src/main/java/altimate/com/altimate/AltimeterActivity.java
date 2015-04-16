@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 import java.math.BigDecimal;
-
 import java.math.RoundingMode;
 import java.util.HashMap;
 
