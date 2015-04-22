@@ -2,6 +2,8 @@ package altimate.com.altimate;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -9,13 +11,18 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.Button;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.view.View;
 import android.view.ViewGroup;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.lang.String;
 import java.util.HashMap;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 
 /**
  * Created by jeanweatherwax on 4/5/15.
@@ -53,6 +60,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
 
   }
 
+
   public static double round(double value, int places) {
     if (places < 0) throw new IllegalArgumentException();
 
@@ -81,8 +89,10 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     Log.d("hello", "helloooo");
     for (int i = 0; i < 100; i++) {
       System.out.println("TEST");
+
     }
   }
+
 
 
   @Override
@@ -90,7 +100,8 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     // Do something here if sensor accuracy changes.
   }
 
-  @Override
+
+      @Override
   public final void onSensorChanged(SensorEvent event) {
     double millibars_of_pressure = event.values[0];
     float millibars_of_pressure_f = (float) millibars_of_pressure;
@@ -107,22 +118,40 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     //1 meter = 3.28084 ft
     double altitude_m = 0.3047999902464 * altitude_ft;
     double altitude_ft_round = round(altitude_ft,3);
+    double altitude_m_round = round(altitude_m,3);
     String altitude_string_ft = Double.toString(altitude_ft_round);
+    String altitude_string_m = Double.toString(altitude_m_round);
+    Log.d("altimate", altitude_string_ft);
+    Log.d("altimate", Double.toString(millibars_of_pressure));
+
+   SharedPreferences prefs = getSharedPreferences("unitStringFile", MODE_PRIVATE);
+   String unitString = prefs.getString("unitStringFile", "ft"); //default is ft
+
+   switch (unitString) {
+
+     case "ft": mTextView.setText("Current altitude: " + altitude_string_ft + "ft");
+       break;
+     case "m": mTextView.setText("Current altitude: " + altitude_string_m + "m");
+       break;
+   }
+
+       //intent method below for passing units not working
+    //Intent intent = getIntent();
+    //String unitString = intent.getExtras().getString("unitString");
     //TextView altitude = (TextView) findViewById(R.id.altitude);
     //altitude.setText(altitude_string);
     //LayoutInflater inflater = getLayoutInflater();
     //View layout = inflater.inflate(R.layout.altimeter,(ViewGroup) findViewById(R.id.alti_layout_id));
     //TextView altitude = (TextView) layout.findViewById(R.id.altitude);
     //altitude.setText("test");
-    Log.d("altimate", altitude_string_ft);
-    Log.d("altimate", Double.toString(millibars_of_pressure));
     //for (int i = 0; i < 100; i++) {
       //System.out.println("expected altitude value" + altitude_string);
     //}
+    //find desired units from settings
     System.out.println("expected altitude value " + altitude_string_ft + " millibars of pressure " + millibars_of_pressure);
-    mTextView = (TextView) findViewById(R.id.altitude);
+    //mTextView = (TextView) findViewById(R.id.altitude);
     //mTextView.setText(altitude_string);
-    mTextView.setText("Current altitude: " + altitude_string_ft + " ft");
+      //mTextView.setText("Current altitude: " + altitude_string_ft + "ft");
   }
 
   @Override
