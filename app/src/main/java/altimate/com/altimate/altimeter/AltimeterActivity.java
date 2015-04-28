@@ -90,10 +90,10 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
 
     switch (distanceUnit) {
       case FEET:
-        mTextView.setText("Current altitude: " + altitude_string_ft + distanceUnit.name());
+        mTextView.setText("Current altitude: " + altitude_string_ft + " " + distanceUnit.getShortFormValue());
         break;
       case METERS:
-        mTextView.setText("Current altitude: " + altitude_string_m + distanceUnit.name());
+        mTextView.setText("Current altitude: " + altitude_string_m + " " + distanceUnit.getShortFormValue());
         break;
     }
 
