@@ -16,7 +16,7 @@ public class AltimatePrefs {
 
   public static DistanceUnit getUnitPreference(Context context) {
     SharedPreferences prefs = getSharedPreferences(context);
-    String val = prefs.getString(KEY_UNIT_PREFERENCE, "ft");
+    String val = prefs.getString(KEY_UNIT_PREFERENCE, "FEET");
     DistanceUnit unit = DistanceUnit.valueOf(val);
     return unit;
   }

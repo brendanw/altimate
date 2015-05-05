@@ -55,7 +55,6 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     mPressure = mSensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
     //inflate textview after calling setContentView()
     mTextView = (TextView) findViewById(R.id.altitude);
-    mTextView.setText("test");
     Log.d("hello", "helloooo");
     for (int i = 0; i < 100; i++) {
       System.out.println("TEST");
