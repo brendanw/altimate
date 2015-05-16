@@ -15,4 +15,11 @@
             android:text="Launch Altimeter"
             android:layout_centerInParent="true"/>
 
+        <Button
+            android:id="@+id/weather_button"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:text="View SF Weather"
+            android:layout_below="@id/launch_button" />
+
 </RelativeLayout>

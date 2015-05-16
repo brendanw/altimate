@@ -10,32 +10,46 @@ import android.widget.Button;
 
 import altimate.com.altimate.altimeter.AltimeterActivity;
 import altimate.com.altimate.settings.SettingsActivity;
+import altimate.com.altimate.weather.WeatherActivity;
 
 
 public class HomeActivity extends ActionBarActivity {
 
-  private Button mButton;
+  private Button mLaunchAltimeterButton;
+  private Button mViewWeatherButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.home);
-    mButton = (Button) findViewById(R.id.launch_button);
-    mButton.setOnClickListener(new View.OnClickListener() {
+
+    /** Initiate Launch Altimeter Button */
+    mLaunchAltimeterButton = (Button) findViewById(R.id.launch_button);
+    mLaunchAltimeterButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         /** Launch altimeter activity here */
-        Intent myIntent = new Intent(HomeActivity.this, AltimeterActivity.class);
-        HomeActivity.this.startActivity(myIntent);
-
-     }
+        Intent launchAltimeterIntent = new Intent(HomeActivity.this, AltimeterActivity.class);
+        HomeActivity.this.startActivity(launchAltimeterIntent);
+      }
     });
-  }
 
+    /** Initiate Weather Button */
+    mViewWeatherButton = (Button) findViewById(R.id.weather_button);
+    mViewWeatherButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent launchWeatherIntent = new Intent(HomeActivity.this, WeatherActivity.class);
+        HomeActivity.this.startActivity(launchWeatherIntent);
+      }
+    });
+
+  }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
+    /** Inflate the menu; this adds items to the action bar if it is present. */
     getMenuInflater().inflate(R.menu.menu_home, menu);
     return true;
   }
