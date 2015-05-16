@@ -24,7 +24,7 @@ public class HomeActivity extends ActionBarActivity {
     mButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        //launch altimeter activity here
+        /** Launch altimeter activity here */
         Intent myIntent = new Intent(HomeActivity.this, AltimeterActivity.class);
         HomeActivity.this.startActivity(myIntent);
 
