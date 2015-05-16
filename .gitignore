@@ -29,6 +29,9 @@ Thumbs.db
 .idea
 .idea/
 app/app.iml
+*.iml
+.idea/
+
 #.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
