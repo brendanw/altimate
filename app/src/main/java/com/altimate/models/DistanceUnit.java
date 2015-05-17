@@ -1,4 +1,4 @@
-package altimate.com.altimate.models;
+package com.altimate.models;
 
 /**
  * Created by jeanweatherwax on 4/25/15.

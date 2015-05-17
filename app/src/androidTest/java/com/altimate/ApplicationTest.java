@@ -1,4 +1,4 @@
-package altimate.com.altimate;
+package com.altimate;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
