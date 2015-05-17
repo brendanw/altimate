@@ -2,8 +2,11 @@ package com.altimate.persistentdata;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
 
 import com.altimate.models.DistanceUnit;
+import com.altimate.utils.GsonProvider;
+import com.google.gson.Gson;
 
 /**
  * Created by jeanweatherwax on 4/25/15.
@@ -13,6 +16,8 @@ public class AltimatePrefs {
   private static final String SHARED_PREFS_FILE_NAME = "altimate_prefs";
 
   private static final String KEY_UNIT_PREFERENCE = "unit_preference";
+  private static final String KEY_BASE_PRESSURE = "base_pressure";
+  private static final String KEY_LOCATION = "location";
 
   public static DistanceUnit getUnitPreference(Context context) {
     SharedPreferences prefs = getSharedPreferences(context);
@@ -25,6 +30,32 @@ public class AltimatePrefs {
     SharedPreferences.Editor editor = getEditor(context);
     editor.putString(KEY_UNIT_PREFERENCE, unitPreference);
     editor.commit();
+  }
+
+  public static void setLocation(Context context, Location location) {
+    SharedPreferences.Editor editor = getEditor(context);
+    String serializedLocation = GsonProvider.get().toJson(location);
+    editor.putString(KEY_LOCATION, serializedLocation);
+    editor.commit();
+  }
+
+  public static Location getLocation(Context context) {
+    SharedPreferences prefs = getSharedPreferences(context);
+    String serializedLocation = prefs.getString(KEY_LOCATION, null);
+    Location location = GsonProvider.get().fromJson(serializedLocation, Location.class);
+    return location;
+  }
+
+  public static void setBasePressure(Context context, Float basePressure) {
+    SharedPreferences.Editor editor = getEditor(context);
+    editor.putFloat(KEY_BASE_PRESSURE, basePressure);
+    editor.commit();
+  }
+
+  public static Float getBasePressure(Context context) {
+    SharedPreferences prefs = getSharedPreferences(context);
+    Float basePressure = prefs.getFloat(KEY_BASE_PRESSURE, 0f);
+    return basePressure;
   }
 
 

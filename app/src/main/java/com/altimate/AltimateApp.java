@@ -3,6 +3,7 @@ package com.altimate;
 import android.app.Application;
 import android.content.Context;
 
+import com.altimate.utils.LocationService;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -22,6 +23,10 @@ public class AltimateApp extends Application {
   public void onCreate() {
     super.onCreate();
     refWatcher = LeakCanary.install(this);
+
+    /** Retrieve location immediately */
+    LocationService.getInstance().init(AltimateApp.this);
+    LocationService.getInstance().startListeningForLocation();
   }
 
 }

@@ -14,10 +14,16 @@ public class WeatherResponseWrapper {
   public static class MainWrapper {
 
     private Float temp;
+    private Float pressure;
 
     public Float getTemp() {
       return temp;
     }
+
+    public Float getPressure() {
+      return pressure;
+    }
+
   }
 }
 
