@@ -1,4 +1,4 @@
-package altimate.com.altimate.altimeter;
+package com.altimate.altimeter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import altimate.com.altimate.R;
-import altimate.com.altimate.models.DistanceUnit;
-import altimate.com.altimate.persistentdata.AltimatePrefs;
+import com.altimate.R;
+import com.altimate.models.DistanceUnit;
+import com.altimate.persistentdata.AltimatePrefs;
 
 /**
  * Created by jeanweatherwax on 4/5/15.

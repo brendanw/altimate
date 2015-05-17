@@ -1,4 +1,4 @@
-package altimate.com.altimate.settings;
+package com.altimate.settings;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import altimate.com.altimate.R;
-import altimate.com.altimate.models.DistanceUnit;
-import altimate.com.altimate.persistentdata.AltimatePrefs;
+import com.altimate.R;
+import com.altimate.models.DistanceUnit;
+import com.altimate.persistentdata.AltimatePrefs;
 
 /**
  * Created by jeanweatherwax on 4/14/15.

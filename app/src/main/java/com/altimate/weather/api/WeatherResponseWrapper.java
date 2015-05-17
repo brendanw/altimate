@@ -1,4 +1,4 @@
-package altimate.com.altimate.weather.api;
+package com.altimate.weather.api;
 
 /**
  * Created by brendanweinstein on 5/16/15.

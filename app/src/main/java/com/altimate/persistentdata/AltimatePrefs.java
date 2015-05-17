@@ -1,9 +1,9 @@
-package altimate.com.altimate.persistentdata;
+package com.altimate.persistentdata;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import altimate.com.altimate.models.DistanceUnit;
+import com.altimate.models.DistanceUnit;
 
 /**
  * Created by jeanweatherwax on 4/25/15.

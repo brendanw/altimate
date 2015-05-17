@@ -1,4 +1,4 @@
-package altimate.com.altimate.api;
+package com.altimate.api;
 
 /**
  * Created by brendanweinstein on 5/16/15.

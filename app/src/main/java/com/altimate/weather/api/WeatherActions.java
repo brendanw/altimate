@@ -1,4 +1,4 @@
-package altimate.com.altimate.weather.api;
+package com.altimate.weather.api;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;

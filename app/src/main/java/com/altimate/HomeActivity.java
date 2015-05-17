@@ -1,4 +1,4 @@
-package altimate.com.altimate;
+package com.altimate;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -8,9 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import altimate.com.altimate.altimeter.AltimeterActivity;
-import altimate.com.altimate.settings.SettingsActivity;
-import altimate.com.altimate.weather.WeatherActivity;
+import com.altimate.R;
+import com.altimate.altimeter.AltimeterActivity;
+import com.altimate.settings.SettingsActivity;
+import com.altimate.weather.WeatherActivity;
 
 
 public class HomeActivity extends ActionBarActivity {

@@ -1,13 +1,13 @@
-package altimate.com.altimate.weather;
+package com.altimate.weather;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import altimate.com.altimate.R;
-import altimate.com.altimate.weather.api.WeatherActions;
-import altimate.com.altimate.weather.api.WeatherResponseWrapper;
+import com.altimate.R;
+import com.altimate.weather.api.WeatherActions;
+import com.altimate.weather.api.WeatherResponseWrapper;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

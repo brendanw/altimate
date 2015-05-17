@@ -6,7 +6,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "altimate.com.altimate"
+        applicationId "com.altimate"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1

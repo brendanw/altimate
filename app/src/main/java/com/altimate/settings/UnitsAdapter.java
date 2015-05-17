@@ -1,4 +1,4 @@
-package altimate.com.altimate.settings;
+package com.altimate.settings;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import altimate.com.altimate.R;
-import altimate.com.altimate.models.DistanceUnit;
+import com.altimate.R;
+import com.altimate.models.DistanceUnit;
 
 /**
  * Created by jeanweatherwax on 4/25/15.
