@@ -32,6 +32,12 @@ app/app.iml
 *.iml
 .idea/
 
-#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
 .gradle
 build/
+
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build
