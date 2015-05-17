@@ -44,4 +44,7 @@ dependencies {
     /** For leak-safe callback handling */
     compile 'de.greenrobot:eventbus:2.4.0'
 
+    /** For location detection */
+    compile 'com.google.android.gms:play-services-location:7.0.0'
+
 }
