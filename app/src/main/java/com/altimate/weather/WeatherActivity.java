@@ -8,6 +8,10 @@ import android.widget.Toast;
 import com.altimate.R;
 import com.altimate.weather.api.WeatherActions;
 import com.altimate.weather.api.WeatherResponseWrapper;
+import com.altimate.weather.events.WeatherResponseFailure;
+import com.altimate.weather.events.WeatherResponseSuccess;
+
+import de.greenrobot.event.EventBus;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -33,26 +37,48 @@ public class WeatherActivity extends Activity {
     WeatherActions.getWeather(query, units, weatherCallBack);
   }
 
-  Callback<WeatherResponseWrapper> weatherCallBack = new Callback<WeatherResponseWrapper>() {
+  @Override
+  public void onResume() {
+    super.onResume();
+    EventBus.getDefault().register(WeatherActivity.this);
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    EventBus.getDefault().unregister(WeatherActivity.this);
+  }
+
+  public void onEvent(WeatherResponseSuccess success) {
+    WeatherResponseWrapper weatherResponseWrapper = success.getWeatherResponseWrapper();
+    Toast.makeText(WeatherActivity.this, "Successful request", Toast.LENGTH_LONG)
+            .show();
+    String tempInDegrees = weatherResponseWrapper.getMainWrapper().getTemp().toString();
+    mWeatherInSFTextView.setText("It is " + tempInDegrees + " degrees in SF");
+  }
+
+  public void onEvent(WeatherResponseFailure failure) {
+    Toast.makeText(WeatherActivity.this, "Unsuccessful request", Toast.LENGTH_LONG)
+            .show();
+  }
+
+  /**
+   * Inner static classes do not hold reference to the class they are within, so
+   * there is no risk of leaking WeatherActivity if weatherCallback exists longer
+   */
+  static Callback<WeatherResponseWrapper> weatherCallBack = new Callback<WeatherResponseWrapper>() {
     @Override
     public void success(WeatherResponseWrapper weatherResponseWrapper, Response response) {
-      Toast.makeText(WeatherActivity.this, "Successful request", Toast.LENGTH_LONG)
-              .show();
-      String tempInDegrees = weatherResponseWrapper.getMainWrapper().getTemp().toString();
-      mWeatherInSFTextView.setText("It is " + tempInDegrees + " degrees in SF");
+      WeatherResponseSuccess successEvent = new WeatherResponseSuccess(weatherResponseWrapper);
+      EventBus.getDefault().post(successEvent);
     }
 
     @Override
     public void failure(RetrofitError error) {
-      Toast.makeText(WeatherActivity.this, "Unsuccessful request", Toast.LENGTH_LONG)
-              .show();
+      WeatherResponseFailure failureEvent = new WeatherResponseFailure();
+      EventBus.getDefault().post(failureEvent);
     }
   };
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-  }
 
 
 }

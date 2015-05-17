@@ -31,6 +31,7 @@ public class WeatherActions {
     WeatherActions.OpenWeatherService weatherService = restAdapter.create(WeatherActions.OpenWeatherService.class);
 
     weatherService.getWeatherResponseWrapper(query, units, TOKEN_WEATHER, callBack);
+
   }
 
   public interface OpenWeatherService {
