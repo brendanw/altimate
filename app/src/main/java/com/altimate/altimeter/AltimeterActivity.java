@@ -10,10 +10,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import com.altimate.R;
 import com.altimate.models.DistanceUnit;
@@ -100,11 +96,8 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     double adjust_pressure = current_millibars_of_pressure * mBasePressureCoefficient;
     double altitude_ft = (1 - (Math.pow((adjust_pressure), 0.190284))) * 145366.45;
     //1 meter = 3.28084 ft
-    double altitude_m = 0.3047999902464 * altitude_ft;
     long altitude_ft_round = Math.round(altitude_ft);
-    long altitude_m_round = Math.round(altitude_m);
     String altitude_string_ft = Long.toString(altitude_ft_round);
-    String altitude_string_m = Long.toString(altitude_m_round);
     Log.d(TAG, altitude_string_ft);
     Log.d(TAG, Double.toString(current_millibars_of_pressure));
 
@@ -113,6 +106,9 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
         mTextView.setText("Current altitude: " + altitude_string_ft + " " + mDistanceUnit.getShortFormValue());
         break;
       case METERS:
+        double altitude_m = 0.3047999902464 * altitude_ft;
+        long altitude_m_round = Math.round(altitude_m);
+        String altitude_string_m = Long.toString(altitude_m_round);
         mTextView.setText("Current altitude: " + altitude_string_m + " " + mDistanceUnit.getShortFormValue());
         break;
     }
