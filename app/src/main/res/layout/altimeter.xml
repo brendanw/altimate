@@ -13,5 +13,13 @@
         android:textSize="40sp"
         android:layout_centerInParent="true"/>
 
+    <Button
+        android:id="@+id/zero_button"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="Calibrate Altitude to Zero"
+        android:layout_alignParentBottom="true"/>
+
+
 
 </RelativeLayout>
