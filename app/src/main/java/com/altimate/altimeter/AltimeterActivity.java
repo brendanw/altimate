@@ -130,7 +130,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
         break;
       case METERS:
         //1 meter = 3.28084 ft
-        double altitude_m = 0.3047999902464 * altitude_ft;
+        double altitude_m = 0.3047999902464 * altitude_ft_calibrated;
         long altitude_m_round = Math.round(altitude_m);
         String altitude_string_m = Long.toString(altitude_m_round);
         mTextView.setText("Current altitude: " + altitude_string_m + " " + mDistanceUnit.getShortFormValue());
