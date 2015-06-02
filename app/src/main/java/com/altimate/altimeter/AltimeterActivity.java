@@ -9,11 +9,9 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import com.altimate.R;
 import com.altimate.models.DistanceUnit;
@@ -35,9 +33,14 @@ import retrofit.client.Response;
  */
 public class AltimeterActivity extends Activity implements SensorEventListener {
 
+  private Button mZeroButton;
+
   private static final String TAG = AltimeterActivity.class.getSimpleName();
 
   private static final float DEFAULT_BASE_PRESSURE = 145366.45f;
+
+
+
 
   /** Sensor objects */
   private SensorManager mSensorManager;
@@ -50,6 +53,8 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
   private DistanceUnit mDistanceUnit;
   private double mBasePressure;
   private double mBasePressureCoefficient = 0.000986923;
+  double altitude_ft_zero;
+
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -85,8 +90,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     /** Do something here if sensor accuracy changes. */
   }
 
-  /**
-   * TODO: doing more work than necessary to compute both m and ft if only displaying one of the two
+  /** TODO: Clean this bit of code - altitude variables look disorganized
    * possible viable equations
    * pressure = 1013250*(1-7.4008204468E-5*height)^5.25588 in kPa and ft
    * 1 m = 3.28084 ft
@@ -95,16 +99,28 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
    */
   @Override
   public final void onSensorChanged(SensorEvent event) {
-    double current_millibars_of_pressure = event.values[0];
-    //implement simplified equation for pressure/altitude
-    double adjust_pressure = current_millibars_of_pressure * mBasePressureCoefficient;
-    double altitude_ft = (1 - (Math.pow((adjust_pressure), 0.190284))) * 145366.45;
-    //1 meter = 3.28084 ft
-    double altitude_m = 0.3047999902464 * altitude_ft;
-    long altitude_ft_round = Math.round(altitude_ft);
-    long altitude_m_round = Math.round(altitude_m);
+    final double current_millibars_of_pressure = event.values[0];
+    final double adjust_pressure = current_millibars_of_pressure * mBasePressureCoefficient;
+
+    /**implement simplified equation for pressure/altitude */
+    final double altitude_ft = (1 - (Math.pow((adjust_pressure), 0.190284))) * 145366.45;
+
+
+    /**Initiate zero and calibrate button*/
+    mZeroButton = (Button) findViewById(R.id.zero_button);
+    mZeroButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        //implement simplified equation for pressure/altitude
+        altitude_ft_zero = altitude_ft;
+        Log.d(TAG, "calibrate button pressed");
+      }
+    });
+
+    double altitude_ft_calibrated = altitude_ft - altitude_ft_zero;
+    long altitude_ft_round = Math.round(altitude_ft_calibrated);
     String altitude_string_ft = Long.toString(altitude_ft_round);
-    String altitude_string_m = Long.toString(altitude_m_round);
+
     Log.d(TAG, altitude_string_ft);
     Log.d(TAG, Double.toString(current_millibars_of_pressure));
 
@@ -113,6 +129,10 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
         mTextView.setText("Current altitude: " + altitude_string_ft + " " + mDistanceUnit.getShortFormValue());
         break;
       case METERS:
+        //1 meter = 3.28084 ft
+        double altitude_m = 0.3047999902464 * altitude_ft_calibrated;
+        long altitude_m_round = Math.round(altitude_m);
+        String altitude_string_m = Long.toString(altitude_m_round);
         mTextView.setText("Current altitude: " + altitude_string_m + " " + mDistanceUnit.getShortFormValue());
         break;
     }
@@ -172,5 +192,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
       EventBus.getDefault().post(failureEvent);
     }
   };
+
+
 
 }
