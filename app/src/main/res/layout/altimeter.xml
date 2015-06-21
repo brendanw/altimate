@@ -23,6 +23,34 @@
         android:textColor="@color/white"
         android:layout_alignParentBottom="true"/>
 
+    <Button
+        android:id="@+id/start_button"
+        android:text="start recording"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:textSize="15sp"
+        android:layout_alignParentTop="true"/>
+
+
+
+
+    <Button
+        android:id="@+id/stop_button"
+        android:text="stop recording"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:textSize="15sp"
+        android:layout_toRightOf="@+id/start_button"/>
+
+    <Button
+        android:id="@+id/load_button"
+        android:text="load recording"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:textSize="15sp"
+        android:layout_toRightOf="@+id/stop_button"/>
+
+
 
 
 </RelativeLayout>

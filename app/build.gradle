@@ -38,6 +38,10 @@ dependencies {
     /** Our REST client for request and response handling */
     compile 'com.squareup.retrofit:retrofit:1.9.0'
 
+    /** Our graphing utility */
+    compile group: 'org.achartengine', name: 'achartengine', version: '1.2.0'
+    //compile files files('libs/achartengine-1.0.0.jar')
+
     /** For detecting memory leaks */
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3.1'
 
