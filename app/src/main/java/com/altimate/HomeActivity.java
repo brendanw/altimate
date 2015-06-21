@@ -1,17 +1,15 @@
 package com.altimate;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.altimate.R;
 import com.altimate.altimeter.AltimeterActivity;
 import com.altimate.settings.SettingsActivity;
-import com.altimate.weather.WeatherActivity;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -36,15 +34,15 @@ public class HomeActivity extends ActionBarActivity {
       }
     });
 
-    /** Initiate Weather Button */
-    mViewWeatherButton = (Button) findViewById(R.id.weather_button);
+     /** Initiate Weather Button */
+    /* mViewWeatherButton = (Button) findViewById(R.id.weather_button);
     mViewWeatherButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Intent launchWeatherIntent = new Intent(HomeActivity.this, WeatherActivity.class);
         HomeActivity.this.startActivity(launchWeatherIntent);
       }
-    });
+    }); */
 
   }
 
