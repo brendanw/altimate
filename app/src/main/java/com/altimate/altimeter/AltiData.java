@@ -1,4 +1,4 @@
-package com.altimate.weather;
+package com.altimate.altimeter;
 
 
 /**

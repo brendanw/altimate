@@ -19,7 +19,6 @@ import com.altimate.R;
 import com.altimate.models.DistanceUnit;
 import com.altimate.persistentdata.AltimatePrefs;
 import com.altimate.utils.ToastUtils;
-import com.altimate.weather.AltiData;
 import com.altimate.weather.api.WeatherActions;
 import com.altimate.weather.api.WeatherResponseWrapper;
 import com.altimate.weather.events.LocationUpdateEvent;
@@ -49,7 +48,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
 
   private boolean started = false;
 
-  private ArrayList altiData;
+  private ArrayList<AltiData> altiData = new ArrayList<AltiData>();
 
   private View mChart;
 
@@ -58,6 +57,8 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
   private static final float DEFAULT_BASE_PRESSURE = 145366.45f;
 
   private RelativeLayout layout;
+
+  //private AltiData altiData2;
 
 
   /** Sensor objects */
@@ -163,6 +164,31 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
         //implement simplified equation for pressure/altitude
         altitude_ft_zero = altitude_ft;
         Log.d(TAG, "calibrate button pressed");
+
+        switch (view.getId()) {
+          case R.id.start_button:
+            mStartButton.setEnabled(false);
+            mStopButton.setEnabled(true);
+            mLoadButton.setEnabled(false);
+            altiData = new ArrayList();
+            // save prev data if available
+            started = true;
+          case R.id.stop_button:
+            mStartButton.setEnabled(true);
+            mStopButton.setEnabled(false);
+            mLoadButton.setEnabled(true);
+            started = false;
+            layout.removeAllViews();
+            openChart();
+
+            // show data in chart
+            break;
+          case R.id.load_button:
+
+            break;
+          default:
+            break;
+        }
       }
     });
 
@@ -193,7 +219,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     if (started){
       double x = altitude_ft;
       long timestamp = System.currentTimeMillis();
-      AltiData data= new AltiData(timestamp, x);
+      AltiData data = new AltiData(timestamp, x);
       altiData.add(data);
       System.out.println(altiData);
     }
@@ -213,34 +239,11 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     mSensorManager.unregisterListener(AltimeterActivity.this);
   }
 
-  @Override
-  public void onClick(View v) {
-    switch (v.getId()) {
-      case R.id.start_button:
-        mStartButton.setEnabled(false);
-        mStopButton.setEnabled(true);
-        mLoadButton.setEnabled(false);
-        altiData = new ArrayList();
-        // save prev data if available
-        started = true;
-      case R.id.stop_button:
-        mStartButton.setEnabled(true);
-        mStopButton.setEnabled(false);
-        mLoadButton.setEnabled(true);
-        started = false;
-        layout.removeAllViews();
-        openChart();
+  //@Override
+  //public void onClick(View v) {
 
-        // show data in chart
-        break;
-      case R.id.load_button:
 
-        break;
-      default:
-        break;
-    }
-
-  }
+//  }
 
   private void openChart() {
     if (altiData != null || altiData.size() > 0) {
@@ -277,7 +280,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
                 + (altiData.get(i).getTimestamp() - t));
       }
       for (int i = 0; i < 12; i++) {
-        multiRenderer.addYTextLabel(i + 1, ""+i);
+        multiRenderer.addYTextLabel(i + 1, "" + i);
       }
 
       multiRenderer.addSeriesRenderer(xRenderer);
@@ -293,6 +296,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
       layout.addView(mChart);
 
     }
+  }
 
   public void onEvent(LocationUpdateEvent locationUpdateEvent) {
     Location location = locationUpdateEvent.getLocation();
