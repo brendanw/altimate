@@ -80,6 +80,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.altimeter);
     mTextView = (TextView) findViewById(R.id.altitude);
+    layout = (RelativeLayout) findViewById(R.id.alti_layout_id);
     altiData = new ArrayList();
 
     /**
@@ -104,7 +105,8 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
       mBasePressureCoefficient = 1.0 / mBasePressure;
     }
 
-    /**Initiate start and stop recording buttons */
+    /**
+    /**Initiate start and stop recording buttons
     mStartButton = (Button) findViewById(R.id.start_button);
     mStopButton = (Button) findViewById(R.id.stop_button);
     mLoadButton = (Button) findViewById(R.id.load_button);
@@ -126,12 +128,10 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
         Log.d(TAG, "load button pressed");
       }
     });
+    */
 
-    mStartButton.setEnabled(true);
-    mStopButton.setEnabled(false);
-    if (altiData == null || altiData.size() == 0) {
-      mLoadButton.setEnabled(false);
-    }
+
+
 
   }
 
@@ -156,6 +156,11 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     final double altitude_ft = (1 - (Math.pow((adjust_pressure), 0.190284))) * 145366.45;
 
 
+    /**Initiate start and stop recording buttons */
+    mStartButton = (Button) findViewById(R.id.start_button);
+    mStopButton = (Button) findViewById(R.id.stop_button);
+    mLoadButton = (Button) findViewById(R.id.load_button);
+
     /**Initiate zero and calibrate button*/
     mZeroButton = (Button) findViewById(R.id.zero_button);
     mZeroButton.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +169,26 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
         //implement simplified equation for pressure/altitude
         altitude_ft_zero = altitude_ft;
         Log.d(TAG, "calibrate button pressed");
+
+        mStartButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Log.d(TAG, "start button pressed");
+          }
+        });
+
+        mStopButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Log.d(TAG, "stop button pressed");
+          }
+        });
+        mLoadButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+            Log.d(TAG, "load button pressed");
+          }
+        });
 
         switch (view.getId()) {
           case R.id.start_button:
@@ -188,6 +213,12 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
             break;
           default:
             break;
+        }
+
+        mStartButton.setEnabled(true);
+        mStopButton.setEnabled(false);
+        if (altiData == null || altiData.size() == 0) {
+          mLoadButton.setEnabled(false);
         }
       }
     });
@@ -239,11 +270,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     mSensorManager.unregisterListener(AltimeterActivity.this);
   }
 
-  //@Override
-  //public void onClick(View v) {
 
-
-//  }
 
   private void openChart() {
     if (altiData != null || altiData.size() > 0) {
