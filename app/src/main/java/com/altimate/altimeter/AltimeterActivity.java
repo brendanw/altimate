@@ -2,7 +2,6 @@ package com.altimate.altimeter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,13 +23,6 @@ import com.altimate.weather.api.WeatherResponseWrapper;
 import com.altimate.weather.events.LocationUpdateEvent;
 import com.altimate.weather.events.WeatherResponseFailure;
 import com.altimate.weather.events.WeatherResponseSuccess;
-
-import org.achartengine.ChartFactory;
-import org.achartengine.chart.PointStyle;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYSeries;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
 
 import java.util.ArrayList;
 
@@ -156,10 +148,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     final double altitude_ft = (1 - (Math.pow((adjust_pressure), 0.190284))) * 145366.45;
 
 
-    /**Initiate start and stop recording buttons */
-    mStartButton = (Button) findViewById(R.id.start_button);
-    mStopButton = (Button) findViewById(R.id.stop_button);
-    mLoadButton = (Button) findViewById(R.id.load_button);
+
 
     /**Initiate zero and calibrate button*/
     mZeroButton = (Button) findViewById(R.id.zero_button);
@@ -170,56 +159,6 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
         altitude_ft_zero = altitude_ft;
         Log.d(TAG, "calibrate button pressed");
 
-        mStartButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Log.d(TAG, "start button pressed");
-          }
-        });
-
-        mStopButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Log.d(TAG, "stop button pressed");
-          }
-        });
-        mLoadButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Log.d(TAG, "load button pressed");
-          }
-        });
-
-        switch (view.getId()) {
-          case R.id.start_button:
-            mStartButton.setEnabled(false);
-            mStopButton.setEnabled(true);
-            mLoadButton.setEnabled(false);
-            altiData = new ArrayList();
-            // save prev data if available
-            started = true;
-          case R.id.stop_button:
-            mStartButton.setEnabled(true);
-            mStopButton.setEnabled(false);
-            mLoadButton.setEnabled(true);
-            started = false;
-            layout.removeAllViews();
-            openChart();
-
-            // show data in chart
-            break;
-          case R.id.load_button:
-
-            break;
-          default:
-            break;
-        }
-
-        mStartButton.setEnabled(true);
-        mStopButton.setEnabled(false);
-        if (altiData == null || altiData.size() == 0) {
-          mLoadButton.setEnabled(false);
-        }
       }
     });
 
@@ -247,13 +186,6 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
 
     Log.d(TAG, "expected altitude value " + altitude_string_ft + " millibars of pressure " + current_millibars_of_pressure);
 
-    if (started){
-      double x = altitude_ft;
-      long timestamp = System.currentTimeMillis();
-      AltiData data = new AltiData(timestamp, x);
-      altiData.add(data);
-      System.out.println(altiData);
-    }
   }
 
   @Override
@@ -268,61 +200,6 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     super.onPause();
     EventBus.getDefault().unregister(AltimeterActivity.this);
     mSensorManager.unregisterListener(AltimeterActivity.this);
-  }
-
-
-
-  private void openChart() {
-    if (altiData != null || altiData.size() > 0) {
-      long t = altiData.get(0).getTimestamp();
-      XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-
-      XYSeries xSeries = new XYSeries("X");
-
-      for (AltiData data : altiData) {
-        xSeries.add(data.getTimestamp() - t, data.getX());
-      }
-
-      dataset.addSeries(xSeries);
-
-
-      XYSeriesRenderer xRenderer = new XYSeriesRenderer();
-      xRenderer.setColor(Color.RED);
-      xRenderer.setPointStyle(PointStyle.CIRCLE);
-      xRenderer.setFillPoints(true);
-      xRenderer.setLineWidth(1);
-      xRenderer.setDisplayChartValues(false);
-
-
-      XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
-      multiRenderer.setXLabels(0);
-      multiRenderer.setLabelsColor(Color.BLUE);
-      multiRenderer.setChartTitle("t vs altitude");
-      multiRenderer.setXTitle("Alti Data");
-      multiRenderer.setYTitle("Values of Altitude");
-      multiRenderer.setZoomButtonsVisible(true);
-      for (int i = 0; i < altiData.size(); i++) {
-
-        multiRenderer.addXTextLabel(i + 1, ""
-                + (altiData.get(i).getTimestamp() - t));
-      }
-      for (int i = 0; i < 12; i++) {
-        multiRenderer.addYTextLabel(i + 1, "" + i);
-      }
-
-      multiRenderer.addSeriesRenderer(xRenderer);
-
-
-      // Getting a reference to Layout of the MainActivity Layout
-
-      // Creating a Line Chart
-      mChart = ChartFactory.getLineChartView(getBaseContext(), dataset,
-              multiRenderer);
-
-      // Adding the Line Chart to the LinearLayout
-      layout.addView(mChart);
-
-    }
   }
 
   public void onEvent(LocationUpdateEvent locationUpdateEvent) {
