@@ -4,6 +4,8 @@ package com.altimate.altimeter;
 /**
  * Created by jeanweatherwax on 6/21/15.
  */
+
+/** for later use with next step graphical representation feature */
 public class AltiData {
   private long timestamp;
   private double x;
