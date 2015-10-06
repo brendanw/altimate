@@ -1,6 +1,10 @@
 package com.altimate;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -14,16 +18,44 @@ import com.altimate.settings.SettingsActivity;
 
 public class HomeActivity extends ActionBarActivity {
 
-  Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+  /**simple GPS checker intent */
+  //Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
   //startActivity(gpsOptionsIntent);
 
   private Button mLaunchAltimeterButton;
   //private Button mViewWeatherButton;
 
+  /**Alert if GPS not enabled */
+  public void buildAlertGPS() {
+    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+            .setCancelable(false)
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+              public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+              }
+            })
+            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+              public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                dialog.cancel();
+              }
+            });
+    final AlertDialog alert = builder.create();
+    alert.show();
+  }
+
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    startActivity(gpsOptionsIntent);
+    /**simple GPS checker */
+    //startActivity(gpsOptionsIntent);
+
+    /** check if location services enabled and prompt if not */
+    final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
+    if ( !manager.isProviderEnabled((LocationManager.GPS_PROVIDER))) {
+      buildAlertGPS();
+    }
 
     setContentView(R.layout.home);
 
