@@ -14,12 +14,16 @@ import com.altimate.settings.SettingsActivity;
 
 public class HomeActivity extends ActionBarActivity {
 
+  Intent gpsOptionsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+  //startActivity(gpsOptionsIntent);
+
   private Button mLaunchAltimeterButton;
-  private Button mViewWeatherButton;
+  //private Button mViewWeatherButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    startActivity(gpsOptionsIntent);
 
     setContentView(R.layout.home);
 

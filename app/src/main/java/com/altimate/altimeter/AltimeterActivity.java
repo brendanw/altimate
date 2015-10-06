@@ -123,8 +123,6 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
     */
 
 
-
-
   }
 
   @Override
