@@ -26,7 +26,7 @@ public class HomeActivity extends ActionBarActivity {
   //private Button mViewWeatherButton;
 
   /**Alert if GPS not enabled */
-  public void buildAlertGPS() {
+  private void buildAlertGPS() {
     final AlertDialog.Builder builder = new AlertDialog.Builder(this);
     builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
             .setCancelable(false)

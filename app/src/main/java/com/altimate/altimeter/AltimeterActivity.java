@@ -42,7 +42,7 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
 
   private ArrayList<AltiData> altiData = new ArrayList<AltiData>();
 
-  private View mChart;
+  //private View mChart;
 
   private static final String TAG = AltimeterActivity.class.getSimpleName();
 
@@ -50,7 +50,6 @@ public class AltimeterActivity extends Activity implements SensorEventListener {
 
   private RelativeLayout layout;
 
-  //private AltiData altiData2;
 
 
   /** Sensor objects */
